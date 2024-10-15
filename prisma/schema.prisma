@@ -64,11 +64,11 @@ model Purchase {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-// model VerificationToken {
-//   identifier String
-//   token      String
-//   expires    DateTime
-//  
-//   @@unique([identifier, token])
-//   @@map("verification_tokens")
-// }
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+ 
+  @@unique([identifier, token])
+  @@map("verification_tokens")
+}
