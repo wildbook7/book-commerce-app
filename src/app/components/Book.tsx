@@ -9,9 +9,10 @@ import { useRouter } from "next/navigation";
 
 type Props = {
   book: BookType;
+  isPurchased: boolean;
 };
 
-const Book = ({ book }: Props) => {
+const Book = ({ book, isPurchased }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const { data: session } = useSession();
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -46,7 +47,11 @@ const Book = ({ book }: Props) => {
     setShowModal(false);
   };
   const handlePerchaseClick = () => {
-    setShowModal(true);
+    if (isPurchased) {
+      alert("その商品は購入済みです。");
+    } else {
+      setShowModal(true);
+    }
   };
   const handlePerchaseConfirm = () => {
     if (!user) {

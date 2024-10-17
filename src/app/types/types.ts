@@ -1,5 +1,5 @@
 type BookType = {
-  id: number;
+  id: string;
   title: string;
   content: string;
   price: number;
@@ -8,4 +8,19 @@ type BookType = {
   updatedAt: string;
 };
 
-export type { BookType };
+type Purchase = {
+  id: string;
+  userId: string;
+  bookId: string;
+  createdAt: string;
+  user: User;
+};
+
+type User = {
+  id: string;
+  name?: string | null;
+  email?: string | null;
+  image?: string | null;
+};
+
+export type { BookType, Purchase, User };
