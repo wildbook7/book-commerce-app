@@ -14,8 +14,33 @@ type Props = {
 const Book = ({ book }: Props) => {
   const [showModal, setShowModal] = useState(false);
   const { data: session } = useSession();
-  const user = session?.user;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const user: any = session?.user;
   const router = useRouter();
+
+  const startCheckout = async () => {
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/checkout`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            title: book.title,
+            price: book.price,
+            userId: user?.id,
+            bookId: book.id,
+          }),
+        }
+      );
+      const responseData = await response.json();
+      if (responseData) {
+        router.push(responseData.checkout_url);
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const handleCancel = () => {
     setShowModal(false);
@@ -30,6 +55,7 @@ const Book = ({ book }: Props) => {
       router.push("/login");
     } else {
       // Stripe で決済する
+      startCheckout();
     }
   };
 
