@@ -10,11 +10,9 @@ import { nextAuthOptions } from "./lib/next-auth/options";
 export default async function Home() {
   const { contents } = await getAllBooks();
   const session = await getServerSession(nextAuthOptions);
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const user = session?.user as User;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  let purchaseBookIds: string[];
+  let purchaseBookIds: string[] = [];
 
   if (user) {
     const res = await fetch(
@@ -22,7 +20,6 @@ export default async function Home() {
     );
     const purchasesData = await res.json();
     purchaseBookIds = purchasesData.map(
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       (purchaseBook: Purchase) => purchaseBook.bookId
     );
   }
